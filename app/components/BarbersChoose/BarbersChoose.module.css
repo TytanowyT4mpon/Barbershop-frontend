@@ -1,0 +1,39 @@
+:root {
+  --background1: #F8F5EF;
+  --background2: #DEC7A6;
+  --background2Hover: #c9aa80;
+  --foreground: #121212;
+  --font-barlow: var(--font-geist-barlow);
+}
+
+.BarbersMain{
+    width: 100%;
+    /* min-height: 80vh;  */
+    background-color: var(--background2);
+    padding: 86px;
+}
+
+.BarbersContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    h2{
+        font-family: var(--font-barlow);
+        font-weight: 800;
+        font-size: 48px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        text-align: center;
+        color: var(--foreground);
+
+        margin-bottom: 90px;
+    }
+}
+
+.BarbersList{
+    display: flex;
+    gap: 80px;
+    justify-content: center;
+}

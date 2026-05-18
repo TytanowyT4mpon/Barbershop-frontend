@@ -1,0 +1,94 @@
+:root {
+  --background1: #F8F5EF;
+  --background2: #DEC7A6;
+  --background2Hover: #c9aa80;
+  --foreground: #121212;
+  --font-barlow: var(--font-geist-barlow);
+}
+
+.ServicesMain {
+    width: 100%;
+}
+
+.ServicesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 80px 40px; /* Optional padding for layout breathing room */
+    max-width: 1200px;
+    width: 100%;
+
+    h2 {
+        font-family: var(--font-barlow);
+        font-weight: 800;
+        font-size: 48px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        text-align: center;
+        color: var(--foreground);
+        margin-bottom: 30px;
+    }
+    
+    p {
+        font-family: var(--third-barlow);
+        font-size: 16px;
+        line-height: 150%;
+        text-align: center;
+        max-width: 593px;
+        width: 100%;
+        color: var(--foreground);
+        margin-bottom: 0;
+    }
+}
+
+/* Perfect alignment grid wrapper */
+.OurServicesList {
+    margin-top: 74px;
+    width: 1026px;
+    background-color: var(--background1);
+    box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.05);
+    padding: 60px 80px; 
+    box-sizing: border-box;
+    list-style: none;
+
+    /* Grid layout matches the reference card spacing */
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    column-gap: 90px;
+    row-gap: 100px;
+}
+
+.ServicesListElement {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+}
+
+.ListElementText {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    h3 {
+        font-family: var(--font-barlow);
+        font-weight: 800;
+        font-size: 24px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--foreground);
+        margin: 0;
+    }
+
+    p {
+        font-family: var(--third-barlow);
+        font-size: 15px;
+        line-height: 150%;
+        color: var(--foreground);
+        text-align: left;
+        max-width: 320px;
+        width: 100%;
+        margin: 0;
+    }
+}

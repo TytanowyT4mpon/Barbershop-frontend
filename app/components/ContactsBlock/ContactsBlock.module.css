@@ -1,0 +1,67 @@
+.ContactsWrapper {
+  position: relative;
+  z-index: 10;
+  margin-top: -50px;
+  padding: 0 20px;
+}
+
+.ContactsContainer {
+  max-width: 1240px;
+  margin: 0 auto;
+  list-style: none;
+  height: 200px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.08);
+  background: var(--background1);
+}
+
+.infoBlock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+  color: var(--foreground);
+  flex-shrink: 0;
+}
+
+.infoTitle {
+  font-family: var(--font-barlow);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.infoTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 2px;
+  background: var(--background2);
+}
+
+.infoText {
+  font-family: var(--font-barlow);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  text-align: center;
+  line-height: 1.7;
+}

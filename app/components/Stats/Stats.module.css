@@ -1,0 +1,82 @@
+:root {
+  --background1: #F8F5EF;
+  --background2: #DEC7A6;
+  --background2Hover: #c9aa80;
+  --foreground: #121212;
+  --font-barlow: var(--font-geist-barlow);
+}
+
+.StatsSection {
+    width: 100%;
+    min-height: 80vh; 
+    background-color: var(--background1);
+    display: flex;
+    align-items: center;
+    padding: 160px 20px 80px;
+}
+
+.StatsContainer {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.StatsBlock {
+    display: flex;
+    width: 100%;
+    align-items: center; 
+    justify-content: space-between; 
+    align-items: center;
+    gap: 60px;
+}
+
+.StatsTextBlock {
+    max-width: 493px; 
+    display: flex;
+    flex-direction: column;
+}
+
+.StatsTextBlock h2 {
+    font-family: var(--font-barlow);
+    max-width: 419px;
+    font-weight: 900;
+    font-size: 48px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--foreground);
+    line-height: 1.2;
+    margin-bottom: 30px;
+}
+
+.StatsTextBlock p {
+    font-family: var(--font-barlow);
+    color: var(--foreground);
+    opacity: 0.8;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+}
+
+.StatsInfo {
+    display: flex;
+    gap: 90px;
+}
+
+.customerSatisf, .Expirience {
+    font-family: var(--font-barlow);
+    font-weight: 800;
+    font-size: 48px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--foreground);
+
+    span{
+        color: var(--background2);
+    }
+    
+}
+
+.StatsImage {
+    object-fit: cover;
+    border-radius: 0px; 
+}

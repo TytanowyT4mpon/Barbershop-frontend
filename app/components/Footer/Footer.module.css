@@ -1,0 +1,59 @@
+:root {
+  --background1: #F8F5EF;
+  --background2: #DEC7A6;
+  --background2Hover: #c9aa80;
+  --foreground: #121212;
+  --font-barlow: var(--font-geist-barlow);
+}
+
+.FooterContainer {
+  width: 100%;
+  background-color: var(--foreground);
+  margin-top: auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 40px;
+}
+
+.FooterContainer h3 {
+  color: #888;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.iconsList {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.iconsListElement {
+  display: flex;
+}
+
+.iconLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #888;
+  border: 1px solid #333;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.iconLink:hover {
+  color: var(--background2);
+  border-color: var(--background2);
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}

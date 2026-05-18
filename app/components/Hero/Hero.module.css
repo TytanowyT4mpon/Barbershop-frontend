@@ -1,0 +1,97 @@
+:root {
+  --background1: #F8F5EF;
+  --background2: #DEC7A6;
+  --background2Hover: #c9aa80;
+  --foreground: #121212;
+  --font-barlow: var(--font-geist-barlow);
+}
+
+.HeroSection{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.HeroContainer{
+    display: block;
+    margin: 250px auto;
+    max-width: 1026px;
+}
+
+.HeroMainText{
+    color: var(--background1);
+    font-family: var(--font-barlow);
+
+    h1{
+        font-weight: 900;
+        font-size: 72px;
+        text-transform: uppercase;
+        text-align: center;
+        width: 100%;
+    }
+
+    p{
+        font-weight: 500;
+        font-size: 24px;
+        text-align: center;
+    }
+}
+
+.HeroBtns{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 49px;
+    margin-top: 41px;
+}
+
+.btnBook, .btnBrowse{
+    font-family: var(--font-barlow);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    width: 271px;
+    height: 62px;
+    cursor: pointer;
+    border: none;
+
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.btnBook {
+    background-color: var(--background2);
+    color: var(--foreground);
+}
+
+.btnBook:hover, .btnBook:focus {
+    background-color: var(--background2Hover);
+    outline: none; 
+}
+
+.btnBook:active {
+    opacity: 0.8;
+}
+
+.btnBrowse {
+    background: transparent;
+    border: 2px solid var(--background1);
+    color: var(--background1);
+}
+
+.btnBrowse:hover, .btnBrowse:focus {
+    background-color: var(--background1);
+    color: var(--foreground);
+    outline: none;
+}
+
+.btnBrowse:active {
+    opacity: 0.8;
+}

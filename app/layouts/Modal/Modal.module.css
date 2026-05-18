@@ -1,0 +1,126 @@
+.overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation-duration: 0.2s !important;
+  background-color: rgba(107, 114, 128, 0.4);
+}
+
+@media (prefers-color-scheme: light) {
+  .overlay {
+    background-color: rgba(107, 114, 128, 0.5);
+  }
+}
+
+.overlay.blur {
+  backdrop-filter: blur(0.1rem);
+  -webkit-backdrop-filter: blur(0.1rem);
+}
+
+.modal {
+  margin: 0 1.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  background-color: #F8F5EF;
+  padding: 1.5rem;
+  padding-right: 0.75rem;
+  width: 100%;
+  animation-duration: 0.2s;
+  overflow: hidden;
+  position: relative;
+  animation: fadeIn 0.2s ease-out;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.modal::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.modalHeader {
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-right: 0.75rem;
+}
+
+.modalBody {
+  line-height: 1.38;
+  overflow: auto;
+  max-height: 75vh;
+}
+
+.modalBody.extraPadding {
+  padding-left: 1px;
+  padding-top: 1px;
+}
+
+.modalBody.withScroll {
+  padding-right: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.modalBody.withScroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modalBody.withScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modalBody.withScroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.floatingCloseButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 100;
+  background-color: #F8F5EF;
+}
+
+.modalTitle {
+  width: 100%;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #121212;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  70% {
+    transform: none;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.closeBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
