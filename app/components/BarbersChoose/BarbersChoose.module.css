@@ -36,4 +36,30 @@
     display: flex;
     gap: 80px;
     justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+    .BarbersMain {
+        padding: 60px 40px;
+    }
+
+    .BarbersList {
+        gap: 40px;
+    }
+}
+
+@media (max-width: 640px) {
+    .BarbersMain {
+        padding: 48px 20px;
+    }
+
+    .BarbersContainer h2 {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+
+    .BarbersList {
+        gap: 28px;
+    }
 }

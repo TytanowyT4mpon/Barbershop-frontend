@@ -9,6 +9,7 @@
 .HeroSection{
     position: relative;
     width: 100%;
+    margin: 0 auto;
     height: 100vh;
 
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/hero-bg.jpg');
@@ -94,4 +95,44 @@
 
 .btnBrowse:active {
     opacity: 0.8;
+}
+
+@media (max-width: 1024px) {
+    .HeroContainer {
+        margin: 150px auto;
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 640px) {
+    .HeroContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 400px;
+        padding: 0 20px;
+    }
+
+    .HeroMainText h1 {
+        font-size: 40px;
+    }
+
+    .HeroMainText p {
+        font-size: 16px;
+    }
+
+    .HeroBtns {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        margin-top: 28px;
+    }
+
+    .btnBook, .btnBrowse {
+        width: 100%;
+        max-width: 320px;
+        height: 54px;
+        font-size: 16px;
+    }
 }

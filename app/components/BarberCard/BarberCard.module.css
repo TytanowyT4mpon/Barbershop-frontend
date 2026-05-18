@@ -81,3 +81,15 @@
 .BtnBook:active {
     opacity: 0.8;
 }
+
+@media (max-width: 640px) {
+    .BarberCard {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .BtnBook {
+        padding: 15px 40px;
+        width: 100%;
+    }
+}

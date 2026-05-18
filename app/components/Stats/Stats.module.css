@@ -78,5 +78,57 @@
 
 .StatsImage {
     object-fit: cover;
-    border-radius: 0px; 
+    border-radius: 0px;
+}
+
+@media (max-width: 1024px) {
+
+    .StatsTextBlock h2 {
+        font-size: 35px;
+    }
+
+    .StatsTextBlock {
+        max-width: 100%;
+    }
+
+    .StatsImage {
+        min-width: 320px;
+    }
+}
+
+@media (max-width: 867px) {
+    .StatsBlock {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        gap: 48px;
+    }
+    .StatsSection {
+        padding: 80px 20px 60px;
+        min-height: unset;
+    }
+
+    .StatsTextBlock{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .StatsTextBlock h2 {
+        font-size: 32px;
+        max-width: 100%;
+    }
+
+    .StatsInfo {
+        gap: 40px;
+    }
+
+    .customerSatisf, .Expirience {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 640px) {
+
 }

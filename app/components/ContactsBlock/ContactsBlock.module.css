@@ -65,3 +65,24 @@
   text-align: center;
   line-height: 1.7;
 }
+
+@media (max-width: 768px) {
+  .ContactsWrapper {
+    margin-top: 0;
+  }
+
+  .ContactsContainer {
+    height: auto;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .infoBlock {
+    padding: 28px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .infoBlock:last-child {
+    border-bottom: none;
+  }
+}

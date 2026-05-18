@@ -34,6 +34,16 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
       hideCloseBtn
       className={styles.modalOverride}
     >
+    <button
+        type="button"
+        className={styles.closeBtn}
+        onClick={() => setIsOpen(false)}
+        aria-label="Close"
+        >
+        <svg aria-hidden="true" width="20" height="20">
+            <use href="#icon-x" />
+        </svg>
+    </button>
       <form action={handleSubmit} className={styles.form}>
         {/* Left panel */}
         <div className={styles.leftPanel}>
@@ -71,17 +81,6 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
 
         {/* Right panel */}
         <div className={styles.rightPanel}>
-          <button
-            type="button"
-            className={styles.closeBtn}
-            onClick={() => setIsOpen(false)}
-            aria-label="Close"
-          >
-            <svg aria-hidden="true" width="20" height="20">
-              <use href="#icon-x" />
-            </svg>
-          </button>
-
           <div className={styles.field}>
             <label className={styles.label}>Name</label>
             <div className={styles.inputWrap}>
