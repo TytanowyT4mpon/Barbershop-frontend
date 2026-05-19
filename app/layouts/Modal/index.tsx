@@ -8,6 +8,7 @@ import style from './Modal.module.css';
 interface IModalContentProps {
   title?: string;
   className?: string;
+  bodyClassName?: string;
   closeModal: () => void;
   isOpen: boolean;
   disableOutsideClick?: boolean;
@@ -27,6 +28,7 @@ const ModalConditional: React.FC<IModalContentProps> = (props) => {
     children,
     title,
     className,
+    bodyClassName,
     closeModal,
     isOpen,
     disableOutsideClick = false,
@@ -88,7 +90,7 @@ const ModalConditional: React.FC<IModalContentProps> = (props) => {
             )}
           </div>
         )}
-        <div className={style.modalBody}>{children}</div>
+        <div className={classNames(style.modalBody, bodyClassName)}>{children}</div>
       </div>
     </div>,
     document.body

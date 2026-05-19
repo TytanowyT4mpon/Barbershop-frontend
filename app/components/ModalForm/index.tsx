@@ -5,18 +5,22 @@ import { Barber } from '@/types/barber'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import styles from './ModalForm.module.css'
+import { ServicesMock } from '@/mocks/services'
+import { Service } from '@/types/service'
 
 interface ModalFormProps {
   barber: Barber;
   setIsOpen: (e: boolean) => void;
+  barberService: Service[];
   isOpen: boolean;
 }
 
-const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
+const ModalForm = ({ barber, isOpen, setIsOpen, barberService }: ModalFormProps) => {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [comment, setComment] = useState('')
+  const [selectedServiceId, setSelectedServiceId] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState(barber.freeDate[0] ?? '')
   const [selectedTime, setSelectedTime] = useState('')
 
@@ -33,6 +37,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
       closeModal={() => setIsOpen(false)}
       hideCloseBtn
       className={styles.modalOverride}
+      bodyClassName={styles.modalBodyOverride}
     >
     <button
         type="button"
@@ -50,7 +55,33 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
           <div className={styles.avatarWrap}>
             <Image src={barber.image} alt={barber.name} fill className={styles.avatar} />
           </div>
+
           <h2 className={styles.barberName}>{barber.name.toUpperCase()}</h2>
+
+          <div className={styles.serviceSelectWrap}>
+            <label className={styles.label}>Choose a service</label>
+            <input type="hidden" name="service" value={selectedServiceId} />
+            <div className={styles.serviceGrid}>
+              {barberService.map(service => (
+                <button
+                  key={service.id}
+                  type="button"
+                  className={`${styles.serviceCard} ${selectedServiceId === String(service.id) ? styles.serviceCardActive : ''}`}
+                  onClick={() => setSelectedServiceId(String(service.id))}
+                >
+                  <Image
+                    src={`/icons/${service.iconName}.svg`}
+                    alt={service.name}
+                    width={28}
+                    height={25}
+                    className={styles.serviceCardIcon}
+                  />
+                  <span className={styles.serviceCardName}>{service.name}</span>
+                  <span className={styles.serviceCardMeta}>${service.price} · {service.duration}m</span>
+                </button>
+              ))}
+            </div>
+          </div>
 
           <div className={styles.fieldLeft}>
             <label className={styles.label}>Date</label>
@@ -60,11 +91,12 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
               className={styles.dateInput}
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
+              required
             />
           </div>
 
           <p className={styles.freeTimesLabel}>Free times:</p>
-          <input type="hidden" name="hour" value={selectedTime} />
+          <input type="hidden" name="hour" value={selectedTime} required />
           <div className={styles.timeSlots}>
             {barber.freeHours.map((hour) => (
               <button
@@ -93,6 +125,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
                 className={styles.input}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -109,6 +142,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
                 className={styles.input}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -125,6 +159,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
                 className={styles.input}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
           </div>
