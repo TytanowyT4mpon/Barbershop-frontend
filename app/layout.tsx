@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Barlow } from "next/font/google";
 import "./globals.css";
 import SvgSprite from "./components/SvgSprite";
+import { Toaster } from 'sonner'
 
 const geistBarlow = Barlow({
   variable: "--font-geist-barlow",
@@ -29,6 +30,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <SvgSprite />
+        <Toaster richColors position="top-right" />
         {children}
       </body>
     </html>

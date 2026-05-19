@@ -3,9 +3,9 @@ import { Barber } from './../types/barber';
 export const BarbersMock: Barber[] = [
     {
         id: 1,
-        image: '/examples/barberExample1.jpg',
+        photo_URL: '/examples/barberExample1.jpg',
         name: 'Andress Gill',
-        serviceId: [2, 4],
+        services: [2, 4],
         experience: '5+ years',
         rating: 4.3,
         freeDate: [
@@ -19,9 +19,9 @@ export const BarbersMock: Barber[] = [
     },
     {
         id: 2,
-        image: '/examples/barberExample3.jpg',
+        photo_URL: '/examples/barberExample3.jpg',
         name: 'Adriana Lu',
-        serviceId: [1, 2, 4],
+        services: [1, 2, 4],
         experience: '2+ years',
         rating: 4.1,
         freeDate: [
@@ -35,9 +35,9 @@ export const BarbersMock: Barber[] = [
     },
     {
         id: 3,
-        image: '/examples/barberExample2.jpg',
+        photo_URL: '/examples/barberExample2.jpg',
         name: 'Antony Herrey',
-        serviceId: [1, 3, 4],
+        services: [1, 3, 4],
         experience: '7+ years',
         rating: 4.9,
         freeDate: [

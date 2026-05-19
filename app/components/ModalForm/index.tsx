@@ -3,32 +3,118 @@
 import Modal from '@/app/layouts/Modal'
 import { Barber } from '@/types/barber'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './ModalForm.module.css'
 import { ServicesMock } from '@/mocks/services'
 import { Service } from '@/types/service'
+import { fetchBarbersFreeHours, sendAppointment, sendAppointmentRequest } from '@/lib/api/api'
+import { toast } from 'sonner'
+import { ApiError } from 'next/dist/server/api-utils'
+import { AxiosError } from 'axios'
 
 interface ModalFormProps {
   barber: Barber;
   setIsOpen: (e: boolean) => void;
-  barberService: Service[];
   isOpen: boolean;
 }
 
-const ModalForm = ({ barber, isOpen, setIsOpen, barberService }: ModalFormProps) => {
+const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [comment, setComment] = useState('')
   const [selectedServiceId, setSelectedServiceId] = useState<string>('');
-  const [selectedDate, setSelectedDate] = useState(barber.freeDate[0] ?? '')
+  const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
+  const [freeTimes, setSelsetFreeTimes] = useState<string[]>([])
 
-  const handleSubmit = (formData: FormData) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const today = new Date().toISOString().split('T')[0];
+
+  useEffect(() => {
+    if (!selectedDate) {
+      setSelsetFreeTimes([]);
+      return;
+    }
+
+    const getBarberFreeHours = async() => {
+      setIsLoading(true);
+      try{
+        const res = await fetchBarbersFreeHours(barber.id, selectedDate);
+        setSelsetFreeTimes(res.data.free_slots)
+        setSelectedTime('')
+      } catch(err) {
+        console.log(err);
+        setSelsetFreeTimes([]);
+      } finally{
+        setIsLoading(false);
+      }
+    }
+
+    getBarberFreeHours();
+  }, [selectedDate, barber.id])
+
+  const isButtonDisabled = 
+    !name.trim() || 
+    !phone.trim() || 
+    !email.trim() || 
+    !selectedServiceId || 
+    !selectedDate || 
+    !selectedTime;
+
+  const handleSubmit = async(formData: FormData) => {
     const data = Object.fromEntries(formData);
-    setIsOpen(false);
-    console.log("FormSend: ", data);
-    // TODO: submit booking
+
+    const body: sendAppointmentRequest = {
+      barber: barber.id,
+      service: Number(data.service),
+      date: data.date,
+      time: selectedTime,
+      comment: data.comment,
+      customer_fullname: data.name,
+      customer_phone: data.phone,
+      customer_email: data.email,
+    };
+
+    try{
+      await sendAppointment(body);
+      toast.success('Wizyta została pomyślnie zarezerwowana!')
+      setIsOpen(false);
+
+      setName('')
+      setPhone('')
+      setEmail('')
+      setComment('')
+      setSelectedServiceId('')
+      setSelectedDate('')
+      setSelectedTime('')
+    } catch (err) {
+        const axiosError = err as AxiosError<{ 
+          error?: string; 
+          date?: string[];
+          [key: string]: any;
+        }>;
+
+        let backendError = '';
+
+        if (axiosError.response?.data) {
+          const data = axiosError.response.data;
+          if (data.error) {
+            backendError = data.error;
+          } 
+          else {
+            const firstErrorField = Object.values(data)[0];
+            
+            if (Array.isArray(firstErrorField)) {
+              backendError = firstErrorField[0];
+            } else if (typeof firstErrorField === 'string') {
+              backendError = firstErrorField;
+            }
+          }
+        }
+
+        toast.error(backendError || 'Coś poszło nie tak. Spróbuj ponownie!');
+    }
   }
 
   return (
@@ -53,7 +139,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen, barberService }: ModalFormProps)
         {/* Left panel */}
         <div className={styles.leftPanel}>
           <div className={styles.avatarWrap}>
-            <Image src={barber.image} alt={barber.name} fill className={styles.avatar} />
+            <Image src={barber.photo_URL} alt={barber.name} fill className={styles.avatar} />
           </div>
 
           <h2 className={styles.barberName}>{barber.name.toUpperCase()}</h2>
@@ -62,7 +148,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen, barberService }: ModalFormProps)
             <label className={styles.label}>Choose a service</label>
             <input type="hidden" name="service" value={selectedServiceId} />
             <div className={styles.serviceGrid}>
-              {barberService.map(service => (
+              {barber.services.map(service => (
                 <button
                   key={service.id}
                   type="button"
@@ -70,7 +156,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen, barberService }: ModalFormProps)
                   onClick={() => setSelectedServiceId(String(service.id))}
                 >
                   <Image
-                    src={`/icons/${service.iconName}.svg`}
+                    src={`/icons/${service.icon_name}.svg`}
                     alt={service.name}
                     width={28}
                     height={25}
@@ -91,6 +177,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen, barberService }: ModalFormProps)
               className={styles.dateInput}
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
+              min={today}
               required
             />
           </div>
@@ -98,16 +185,24 @@ const ModalForm = ({ barber, isOpen, setIsOpen, barberService }: ModalFormProps)
           <p className={styles.freeTimesLabel}>Free times:</p>
           <input type="hidden" name="hour" value={selectedTime} required />
           <div className={styles.timeSlots}>
-            {barber.freeHours.map((hour) => (
-              <button
-                key={hour}
-                type="button"
-                className={`${styles.timeChip} ${selectedTime === hour ? styles.timeChipActive : ''}`}
-                onClick={() => setSelectedTime(hour)}
-              >
-                {hour}
-              </button>
-            ))}
+            {!selectedDate ? (
+              <p className={styles.infoMessage}>Please select a date first</p>
+            ) : isLoading ? (
+              <p className={styles.infoMessage}>Loading slots...</p>
+            ) : freeTimes.length > 0 ? (
+              freeTimes.map((hour) => (
+                <button
+                  key={hour}
+                  type="button"
+                  className={`${styles.timeChip} ${selectedTime === hour ? styles.timeChipActive : ''}`}
+                  onClick={() => setSelectedTime(hour)}
+                >
+                  {hour}
+                </button>
+              ))
+            ) : (
+              <p className={styles.errorMessage}>No available slots for this day</p>
+            )}
           </div>
         </div>
 
@@ -175,7 +270,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen, barberService }: ModalFormProps)
             />
           </div>
 
-          <button type="submit" className={styles.submitBtn}>Submit</button>
+          <button type="submit" className={styles.submitBtn} disabled={isButtonDisabled}>Submit</button>
         </div>
       </form>
     </Modal>

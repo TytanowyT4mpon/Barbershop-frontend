@@ -3,6 +3,6 @@ export interface Service {
     name: string;        
     price: number;       
     duration: number;
-    iconName: string;
+    icon_name: string;
     description: string;
 }

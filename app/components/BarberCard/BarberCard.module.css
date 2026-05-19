@@ -19,7 +19,8 @@
 .BarberImage{
     width: 100%;
     height: auto;
-    object-fit: cover; /* Щоб картинка не розтягувалася, а красиво заповнювала простір */
+    height: 240px;
+    object-fit: cover;
     display: block;
 }
 

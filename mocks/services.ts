@@ -6,7 +6,7 @@ export const ServicesMock: Service[] = [
         name: 'Adult Haircut',
         price: 500.00,
         duration: 45,
-        iconName: 'AdultHaircut',
+        icon_name: 'AdultHaircut',
         description: 'Nulla egestas sapien integer mi fermentum tellus tristique consequatolm pulvinar sagittis'
     },
     {
@@ -14,7 +14,7 @@ export const ServicesMock: Service[] = [
         name: 'Kids Haircut',
         price: 350.00,
         duration: 30,
-        iconName: 'KidsHaircut',
+        icon_name: 'KidsHaircut',
         description: 'Nulla egestas sapien integer mi fermentum tellus tristique consequatolm pulvinar sagittis'
     },
     {
@@ -22,7 +22,7 @@ export const ServicesMock: Service[] = [
         name: 'Beard Trim',
         price: 300.00,
         duration: 30,
-        iconName: 'BeardTrim',
+        icon_name: 'BeardTrim',
         description: 'Nulla egestas sapien integer mi fermentum tellus tristique consequatolm pulvinar sagittis'
     },
     {
@@ -30,7 +30,7 @@ export const ServicesMock: Service[] = [
         name: 'Neck Shave',
         price: 200.00,
         duration: 15,
-        iconName: 'NeckShave',
+        icon_name: 'NeckShave',
         description: 'Nulla egestas sapien integer mi fermentum tellus tristique consequatolm pulvinar sagittis'
     },
     {
@@ -38,7 +38,7 @@ export const ServicesMock: Service[] = [
         name: 'Scalp Moisturizing',
         price: 400.00,
         duration: 20,
-        iconName: 'ScalpMoisturizing',
+        icon_name: 'ScalpMoisturizing',
         description: 'Nulla egestas sapien integer mi fermentum tellus tristique consequatolm pulvinar sagittis'
     },
     {
@@ -46,7 +46,7 @@ export const ServicesMock: Service[] = [
         name: 'Beard Grooming',
         price: 450.00,
         duration: 40,
-        iconName: 'BreadGroom', // Твоя назва файлу SVG, яку ми бачили в логах гіта
+        icon_name: 'BreadGroom', // Твоя назва файлу SVG, яку ми бачили в логах гіта
         description: 'Nulla egestas sapien integer mi fermentum tellus tristique consequatolm pulvinar sagittis'
     }
 ];

@@ -2,9 +2,9 @@ import { Service } from "./service";
 
 export interface Barber {
     id: number;
-    image: string;
+    photo_URL: string;
     name: string;
-    serviceId: number[];
+    services: Service[];
     experience: string;
     rating: number;
     freeDate: string[];  // 'РРРР-ММ-ДД'
