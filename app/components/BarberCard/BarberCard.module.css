@@ -8,7 +8,7 @@
 
 .BarberCard{
     background-color: var(--background1);
-    width: 350px;
+    width: 330px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -82,7 +82,7 @@
 
 @media (max-width: 640px) {
     .BarberCard {
-        max-width: 350px;
+        max-width: 300px;
         
         width: 100%;
     }
