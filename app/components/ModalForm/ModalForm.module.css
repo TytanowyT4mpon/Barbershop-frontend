@@ -299,21 +299,23 @@
 
 .submitBtn {
   background: var(--background2);
-  color: #fff;
+  color: #121212;
   border: none;
   border-radius: 0.625rem;
-  padding: 0.75rem 2.5rem;
+  padding: 0.875rem 2.5rem;
   font-size: 1rem;
   font-family: inherit;
-  font-weight: 500;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   cursor: pointer;
-  align-self: flex-end;
-  transition: background 0.15s;
-  /* margin-top: auto; */
+  width: 100%;
+  transition: background 0.15s, transform 0.1s;
 }
 
-.submitBtn:hover {
+.submitBtn:hover:not(:disabled) {
   background: var(--background2Hover);
+  transform: translateY(-1px);
 }
 
 .submitBtn:disabled {
@@ -327,8 +329,67 @@
 
 
 
+.formFooter {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.25rem;
+}
+
+.orderSummary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(222, 199, 166, 0.07);
+  border: 1px solid rgba(222, 199, 166, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.6rem 1rem;
+}
+
+.summaryItem {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #DEC7A6;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.summaryIcon {
+  opacity: 0.7;
+  flex-shrink: 0;
+  fill: none;
+  stroke: #DEC7A6;
+  stroke-width: 1.5;
+}
+
+.summarySep {
+  width: 1px;
+  height: 16px;
+  background: rgba(222, 199, 166, 0.3);
+  flex-shrink: 0;
+}
+
 .errorMessage, .infoMessage{
   color: var(--background1);
+}
+
+.slotsSpinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.submitBtnLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 /* ─── Responsive ─────────────────────────────────────── */

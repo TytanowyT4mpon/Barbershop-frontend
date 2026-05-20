@@ -3,78 +3,206 @@
   --background2: #DEC7A6;
   --background2Hover: #c9aa80;
   --foreground: #121212;
+  --gold: #d4af37;
   --font-barlow: var(--font-geist-barlow);
 }
 
-.BarberCard{
+.BarberCard {
     background-color: var(--background1);
-    width: 330px;
+    width: 340px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-
-    box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.08);
+    position: relative;
+    border-top: 3px solid var(--gold);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.BarberImage{
+.BarberCard:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 52px rgba(0, 0, 0, 0.16);
+}
+
+.ImageWrapper {
+    position: relative;
     width: 100%;
-    height: auto;
-    height: 240px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.BarberImage {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.55s ease;
 }
 
-.BarberCardInfo{
-    padding: 20px 28px;
+.BarberCard:hover .BarberImage {
+    transform: scale(1.06);
+}
+
+.ExperienceBadge {
+    position: absolute;
+    bottom: 14px;
+    right: 0;
+    background-color: var(--gold);
+    color: #121212;
+    font-family: var(--font-barlow);
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    line-height: 1;
+}
+
+.BarberCardInfo {
+    padding: 26px 28px 30px;
     flex: 1;
     display: flex;
     flex-direction: column;
-
-    h3{
-        font-family: var(--font-barlow);
-        font-weight: 800;
-        font-size: 24px;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        text-align: center;
-        color: var(--foreground);
-        margin-bottom: 14px;
-    }
 }
 
-.CardText{
+.BarberName {
     font-family: var(--font-barlow);
     font-weight: 800;
-    font-size: 16px;
-    letter-spacing: 0.05em;
+    font-size: 21px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--foreground);
+    position: relative;
+    padding-bottom: 16px;
+    margin-bottom: 22px;
+}
+
+.BarberName::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 2px;
+    background-color: var(--gold);
+}
+
+.StatsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    margin-bottom: 26px;
+    flex: 1;
+}
+
+.StatRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.StatLabel {
+    font-family: var(--font-barlow);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--foreground);
-    margin-bottom: 20px;
+    opacity: 0.45;
+    min-width: 84px;
+    flex-shrink: 0;
+    padding-top: 1px;
 }
 
-.BtnBook{
-    padding: 15px 75px;
+.StatValue {
+    font-family: var(--font-barlow);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--foreground);
+    line-height: 1.4;
+}
+
+.RatingStars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.StarFilled {
     display: block;
-    margin: auto auto 0;
+    flex-shrink: 0;
+}
+
+.StarEmpty {
+    display: block;
+    flex-shrink: 0;
+    opacity: 0.2;
+}
+
+.RatingNumber {
+    font-family: var(--font-barlow);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--foreground);
+    opacity: 0.6;
+    margin-left: 6px;
+}
+
+.Divider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--foreground);
+    opacity: 0.08;
+    margin-bottom: 26px;
+}
+
+.BtnBook {
+    width: 100%;
+    padding: 14px 20px;
+    display: block;
 
     font-family: var(--font-barlow);
     font-weight: 800;
-    font-size: 18px;
-    letter-spacing: 0.05em;
+    font-size: 12px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     text-align: center;
     color: var(--foreground);
 
-    background-color: var(--background2);
-
-    border: none; 
+    background-color: transparent;
+    border: 1.5px solid var(--foreground);
     cursor: pointer;
-    transition: background 0.3s ease;
+
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease;
+    z-index: 0;
 }
 
-.BtnBook:hover, .BtnBook:focus {
-    background-color: var(--background2Hover);
-    outline: none; 
+.BtnBook::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--foreground);
+    transform: translateY(101%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+.BtnBook:hover,
+.BtnBook:focus {
+    color: var(--background1);
+    outline: none;
+}
+
+.BtnBook:hover::before,
+.BtnBook:focus::before {
+    transform: translateY(0);
 }
 
 .BtnBook:active {
@@ -83,13 +211,7 @@
 
 @media (max-width: 640px) {
     .BarberCard {
-        max-width: 300px;
-        
         width: 100%;
-    }
-
-    .BtnBook {
-        padding: 15px 40px;
-        width: 100%;
+        max-width: 380px;
     }
 }

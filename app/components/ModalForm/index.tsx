@@ -7,10 +7,10 @@ import React, { useEffect, useState } from 'react'
 import styles from './ModalForm.module.css'
 import { ServicesMock } from '@/mocks/services'
 import { Service } from '@/types/service'
-import { fetchBarbersFreeHours, sendAppointment, sendAppointmentRequest } from '@/lib/api/api'
+import { barbersFreeHoursResponse, fetchBarbersFreeHours, sendAppointment, sendAppointmentRequest } from '@/lib/api/api'
 import { toast } from 'sonner'
-import { ApiError } from 'next/dist/server/api-utils'
 import { AxiosError } from 'axios'
+import { ClipLoader } from 'react-spinners'
 
 interface ModalFormProps {
   barber: Barber;
@@ -23,42 +23,57 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [comment, setComment] = useState('')
-  const [selectedServiceId, setSelectedServiceId] = useState<string>('');
+  const [selectedServicesId, setSelectedServicesId] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
-  const [freeTimes, setSelsetFreeTimes] = useState<string[]>([])
+  // const [freeTimes, setSelsetFreeTimes] = useState<string[]>([])
+  const [barberHoursData, setBarberHoursData] = useState<barbersFreeHoursResponse | null>();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isGetHoursLoading, setIsetHoursLoading] = useState(false);
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+
   const today = new Date().toISOString().split('T')[0];
 
+
+  const handleServiceToggle = (serviceId: string) => {
+    setSelectedServicesId((prev) =>
+      prev.includes(serviceId)
+        ? prev.filter((id) => id !== serviceId)
+        : [...prev, serviceId]            
+    );
+  };
+
   useEffect(() => {
-    if (!selectedDate) {
-      setSelsetFreeTimes([]);
+    if (!selectedDate || selectedServicesId.length === 0) {
+      // setSelsetFreeTimes([]);
+      setBarberHoursData(null);
       return;
     }
 
     const getBarberFreeHours = async() => {
-      setIsLoading(true);
+      setIsetHoursLoading(true);
       try{
-        const res = await fetchBarbersFreeHours(barber.id, selectedDate);
-        setSelsetFreeTimes(res.data.free_slots)
+        const res = await fetchBarbersFreeHours(barber.id, selectedDate, selectedServicesId);
+        // setSelsetFreeTimes(res.data.free_slots)
+        setBarberHoursData(res.data);
         setSelectedTime('')
       } catch(err) {
         console.log(err);
-        setSelsetFreeTimes([]);
+        setBarberHoursData(null);
+        // setSelsetFreeTimes([]);
       } finally{
-        setIsLoading(false);
+        setIsetHoursLoading(false);
       }
     }
 
     getBarberFreeHours();
-  }, [selectedDate, barber.id])
+  }, [selectedDate, selectedServicesId, barber.id])
 
   const isButtonDisabled = 
     !name.trim() || 
     !phone.trim() || 
     !email.trim() || 
-    !selectedServiceId || 
+    selectedServicesId.length === 0 ||
     !selectedDate || 
     !selectedTime;
 
@@ -67,7 +82,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
 
     const body: sendAppointmentRequest = {
       barber: barber.id,
-      service: Number(data.service),
+      services: selectedServicesId.map(Number),
       date: data.date,
       time: selectedTime,
       comment: data.comment,
@@ -77,6 +92,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
     };
 
     try{
+      setIsSubmitLoading(true)
       await sendAppointment(body);
       toast.success('Wizyta została pomyślnie zarezerwowana!')
       setIsOpen(false);
@@ -85,7 +101,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
       setPhone('')
       setEmail('')
       setComment('')
-      setSelectedServiceId('')
+      setSelectedServicesId([])
       setSelectedDate('')
       setSelectedTime('')
     } catch (err) {
@@ -114,6 +130,8 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
         }
 
         toast.error(backendError || 'Coś poszło nie tak. Spróbuj ponownie!');
+    } finally{
+      setIsSubmitLoading(false)
     }
   }
 
@@ -146,14 +164,14 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
 
           <div className={styles.serviceSelectWrap}>
             <label className={styles.label}>Choose a service</label>
-            <input type="hidden" name="service" value={selectedServiceId} />
+            <input type="hidden" name="service" value={selectedServicesId} />
             <div className={styles.serviceGrid}>
               {barber.services.map(service => (
                 <button
                   key={service.id}
                   type="button"
-                  className={`${styles.serviceCard} ${selectedServiceId === String(service.id) ? styles.serviceCardActive : ''}`}
-                  onClick={() => setSelectedServiceId(String(service.id))}
+                  className={`${styles.serviceCard} ${selectedServicesId.includes(String(service.id)) ? styles.serviceCardActive : ''}`}
+                  onClick={() => handleServiceToggle(String(service.id))}
                 >
                   <Image
                     src={`/icons/${service.icon_name}.svg`}
@@ -187,10 +205,14 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
           <div className={styles.timeSlots}>
             {!selectedDate ? (
               <p className={styles.infoMessage}>Please select a date first</p>
-            ) : isLoading ? (
-              <p className={styles.infoMessage}>Loading slots...</p>
-            ) : freeTimes.length > 0 ? (
-              freeTimes.map((hour) => (
+            ) : selectedServicesId.length === 0 ? (
+              <p className={styles.infoMessage}>Selct services</p>
+            ) : isGetHoursLoading ? (
+              <div className={styles.slotsSpinner}>
+                <ClipLoader color="#DEC7A6" size={22} speedMultiplier={0.85} />
+              </div>
+            ) : barberHoursData?.free_slots && barberHoursData?.free_slots.length > 0 ? (
+              barberHoursData?.free_slots.map((hour) => (
                 <button
                   key={hour}
                   type="button"
@@ -269,8 +291,30 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
               onChange={(e) => setComment(e.target.value)}
             />
           </div>
-
-          <button type="submit" className={styles.submitBtn} disabled={isButtonDisabled}>Submit</button>
+          
+          <div className={styles.formFooter}>
+            {barberHoursData && (
+              <div className={styles.orderSummary}>
+                <span className={styles.summaryItem}>
+                  <svg aria-hidden="true" width="16" height="16" className={styles.summaryIcon}><use href="#icon-clock" /></svg>
+                  {barberHoursData.total_duration_minutes} min
+                </span>
+                <span className={styles.summarySep} />
+                <span className={styles.summaryItem}>
+                  <svg aria-hidden="true" width="16" height="16" className={styles.summaryIcon}><use href="#icon-dollar" /></svg>
+                  ${barberHoursData.total_price}
+                </span>
+              </div>
+            )}
+            <button type="submit" className={`${styles.submitBtn} ${isSubmitLoading ? styles.submitBtnLoading : ''}`} disabled={isButtonDisabled || isSubmitLoading}>
+              {isSubmitLoading ? (
+                <>
+                  <ClipLoader color="#121212" size={16} speedMultiplier={0.85} />
+                  Booking...
+                </>
+              ) : 'Book appointment'}
+            </button>
+          </div>
         </div>
       </form>
     </Modal>

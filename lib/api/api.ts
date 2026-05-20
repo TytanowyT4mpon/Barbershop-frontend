@@ -1,14 +1,16 @@
 import { Barber } from "@/types/barber";
 import axios from "axios";
 
-interface fetchBarbersFreeHoursResponse{
+export interface barbersFreeHoursResponse{
     date: string,
-    free_slots: string[]
+    free_slots: string[],
+    total_duration_minutes: number;
+    total_price: number;
 }
 
 export interface sendAppointmentRequest{
     barber: number,
-    service: number,
+    services: number[],
     date: FormDataEntryValue,
     time: string,
     comment: FormDataEntryValue,
@@ -30,8 +32,16 @@ export const fetchBarbers = async() => {
     return res.data
 }
 
-export const fetchBarbersFreeHours = async(barberId: number, date: string) => {
-    const res = await api.get<fetchBarbersFreeHoursResponse>(`/barbers/${barberId}/free_slots/?date=${date}`)
+export const fetchBarbersFreeHours = async(barberId: number, date: string, selectedServicesId: string[]) => {
+    const res = await api.get<barbersFreeHoursResponse>(`/barbers/${barberId}/free_slots/`, {
+        params: {
+            date: date,
+            service_ids: selectedServicesId
+        },
+        paramsSerializer: {
+            indexes: null 
+        }
+    })
     return res;
 }
 

@@ -3,63 +3,153 @@
   --background2: #DEC7A6;
   --background2Hover: #c9aa80;
   --foreground: #121212;
+  --gold: #d4af37;
   --font-barlow: var(--font-geist-barlow);
 }
 
-.BarbersMain{
+.BarbersMain {
     width: 100%;
-    /* min-height: 80vh;  */
     background-color: var(--background2);
-    padding: 86px;
+    padding: 100px 80px;
+    position: relative;
+    overflow: hidden;
 }
 
-.BarbersContainer{
+.BarbersMain::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 85% 20%, rgba(212, 175, 55, 0.07) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.BarbersContainer {
     width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     flex-direction: column;
-
-    h2{
-        font-family: var(--font-barlow);
-        font-weight: 800;
-        font-size: 48px;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        text-align: center;
-        color: var(--foreground);
-
-        margin-bottom: 90px;
-    }
+    align-items: center;
+    position: relative;
+    z-index: 1;
 }
 
-.BarbersList{
+.SectionLabel {
+    font-family: var(--font-barlow);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
     display: flex;
-    gap: 80px;
+    align-items: center;
+    gap: 14px;
+}
+
+.SectionLabel::before,
+.SectionLabel::after {
+    content: '';
+    display: block;
+    width: 44px;
+    height: 1px;
+    background-color: var(--gold);
+    opacity: 0.55;
+}
+
+.BarbersContainer h2 {
+    font-family: var(--font-barlow);
+    font-weight: 800;
+    font-size: 52px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--foreground);
+    margin-bottom: 16px;
+    line-height: 1.1;
+}
+
+.SectionSubtitle {
+    font-family: var(--font-barlow);
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    color: var(--foreground);
+    opacity: 0.6;
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.BarbersList {
+    display: flex;
+    gap: 32px;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
+}
+
+.SkeletonCard {
+    background-color: var(--background1);
+    width: 340px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-top: 3px solid rgba(212, 175, 55, 0.25);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.SkeletonInfo {
+    padding: 26px 28px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.NoBarbers {
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-barlow);
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    padding: 80px 0;
 }
 
 @media (max-width: 1024px) {
     .BarbersMain {
-        padding: 60px 40px;
+        padding: 80px 40px;
     }
 
     .BarbersList {
-        gap: 40px;
+        gap: 24px;
     }
 }
 
 @media (max-width: 640px) {
     .BarbersMain {
-        padding: 48px 20px;
+        padding: 60px 20px;
     }
 
     .BarbersContainer h2 {
-        font-size: 28px;
-        margin-bottom: 40px;
+        font-size: 30px;
+        margin-bottom: 12px;
+    }
+
+    .SectionSubtitle {
+        font-size: 14px;
+        margin-bottom: 48px;
     }
 
     .BarbersList {
-        gap: 28px;
+        gap: 20px;
     }
 }
