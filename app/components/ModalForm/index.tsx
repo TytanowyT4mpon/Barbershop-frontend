@@ -5,8 +5,6 @@ import { Barber } from '@/types/barber'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import styles from './ModalForm.module.css'
-import { ServicesMock } from '@/mocks/services'
-import { Service } from '@/types/service'
 import { barbersFreeHoursResponse, fetchBarbersFreeHours, sendAppointment, sendAppointmentRequest } from '@/lib/api/api'
 import { toast } from 'sonner'
 import { AxiosError } from 'axios'
@@ -26,7 +24,6 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
   const [selectedServicesId, setSelectedServicesId] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
-  // const [freeTimes, setSelsetFreeTimes] = useState<string[]>([])
   const [barberHoursData, setBarberHoursData] = useState<barbersFreeHoursResponse | null>();
 
   const [isGetHoursLoading, setIsetHoursLoading] = useState(false);
@@ -321,4 +318,4 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
   )
 }
 
-export default ModalForm
+export default ModalForm;
