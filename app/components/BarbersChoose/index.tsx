@@ -4,29 +4,36 @@ import React, { useEffect, useState } from 'react'
 import style from './BarbersChoose.module.css'
 import BarberCard from '../BarberCard'
 import { Barber } from '@/types/barber'
-import { fetchBarbers } from '@/lib/api/api'
+import { fetchBarbers, fetchBarbersResponse } from '@/lib/api/api'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import Pagination from '../Pagination/Pagination'
 
 const BarbersChooseSection = () => {
-    const [barbers, setBarbers] = useState<Barber[]>([]);
+    // const [barbers, setBarbers] = useState<Barber[]>([]);
+    const [data, setData] = useState<fetchBarbersResponse | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [page, setPage] = useState(1);
+
+    const ITEMS_PER_PAGE = 6;
+    const totalPages = data?.count ? Math.ceil(data.count / ITEMS_PER_PAGE) : 1;
 
     useEffect(() => {
         const getBarbers = async() => {
             setIsLoading(true);
             try {
-                const res = await fetchBarbers();
-                setBarbers(res)
+                const res = await fetchBarbers(page);
+                setData(res);
             } catch(err) {
                 console.log("Sth went wrong!")
+                setData(null);
             } finally {
                 setIsLoading(false);
             }
         }
 
         getBarbers();
-    }, [])
+    }, [page])
 
     return (
         <section className={style.BarbersMain}>
@@ -54,9 +61,9 @@ const BarbersChooseSection = () => {
                             ))}
                         </ul>
                     </SkeletonTheme>
-                ) : barbers && barbers.length > 0 ? (
+                ) : data?.results && data?.results.length > 0 ? (
                     <ul className={style.BarbersList} id='appointment-section'>
-                        {barbers.map(barber => (
+                        {data?.results.map(barber => (
                             <BarberCard key={barber.id} barber={barber} />
                         ))}
                     </ul>
@@ -64,6 +71,10 @@ const BarbersChooseSection = () => {
                     <p className={style.NoBarbers}>No Barbers Available</p>
                 )}
             </div>
+
+            {data && totalPages > 1 && (
+                <Pagination totalPages={totalPages} currentPage={page} onPageChange={setPage} />
+            )}
         </section>
     )
 }

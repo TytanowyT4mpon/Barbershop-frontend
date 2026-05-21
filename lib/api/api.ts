@@ -19,6 +19,13 @@ export interface sendAppointmentRequest{
     customer_email: FormDataEntryValue
 }
 
+export interface fetchBarbersResponse {
+    count: number;
+    next: string;
+    previous: string;
+    results: Barber[];
+}
+
 const baseUrl = process.env.NEXT_PUBLIC_API_URL
 const api = axios.create({
     baseURL: baseUrl,
@@ -27,8 +34,12 @@ const api = axios.create({
     }
 })
 
-export const fetchBarbers = async() => {
-    const res = await api.get('/barbers');
+export const fetchBarbers = async(page: number) => {
+    const res = await api.get<fetchBarbersResponse>('/barbers', {
+        params: {
+            page: page
+        }
+    });
     return res.data
 }
 
