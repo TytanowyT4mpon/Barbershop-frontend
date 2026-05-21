@@ -9,6 +9,7 @@ import { barbersFreeHoursResponse, fetchBarbersFreeHours, sendAppointment, sendA
 import { toast } from 'sonner'
 import { AxiosError } from 'axios'
 import { ClipLoader } from 'react-spinners'
+import { getPhotoPath } from '@/utils/helper'
 
 interface ModalFormProps {
   barber: Barber;
@@ -154,7 +155,7 @@ const ModalForm = ({ barber, isOpen, setIsOpen }: ModalFormProps) => {
         {/* Left panel */}
         <div className={styles.leftPanel}>
           <div className={styles.avatarWrap}>
-            <Image src={barber.photo_URL} alt={barber.name} fill className={styles.avatar} />
+            <Image src={getPhotoPath(barber.photo_URL)} alt={barber.name} fill className={styles.avatar} />
           </div>
 
           <h2 className={styles.barberName}>{barber.name.toUpperCase()}</h2>

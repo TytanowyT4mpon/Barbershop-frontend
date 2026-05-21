@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Barber } from '@/types/barber'
 import ModalForm from '../ModalForm';
 import ScrollReveal from '@/app/layouts/ScrollReveal/ScrollReveal';
+import { getPhotoPath } from '@/utils/helper';
 
 interface BarberCardProps {
     barber: Barber;
@@ -44,6 +45,8 @@ const renderStars = (rating: number) => {
     );
 };
 
+
+
 const BarberCard = ({ barber }: BarberCardProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -54,7 +57,7 @@ const BarberCard = ({ barber }: BarberCardProps) => {
             <div className={style.ImageWrapper}>
                 <Image
                     className={style.BarberImage}
-                    src={`${barber.photo_URL}`}
+                    src={getPhotoPath(barber.photo_URL)}
                     alt={`${barber.name} photo`}
                     width={340}
                     height={300}
