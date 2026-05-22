@@ -35,7 +35,7 @@ const api = axios.create({
 })
 
 export const fetchBarbers = async(page: number) => {
-    const res = await api.get<fetchBarbersResponse>('/barbers', {
+    const res = await api.get<fetchBarbersResponse>('/barbers/', {
         params: {
             page: page
         }
